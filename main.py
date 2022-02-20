@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 
 class Area():
     def __init__(self, x = 0, y = 0, width = 10, height = 10, color=None):
@@ -42,9 +43,18 @@ cards.append(l4)
 for i in range(4):
     cards[i].set_text()
 
+wait = 0
 while True:
-    for card in cards:
-        card.draw(10,30)
+    if wait == 0:
+        wait = 20
+        click = randint(1, len(cards))
+        for i in range(len(cards)):
+            if (i+1) == click:
+                cards[i].draw(10,70)
+            else:
+                cards[i].fill()
+    else:
+        wait -= 1
+
     pygame.display.update()
     clock.tick(40)
-
