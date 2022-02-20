@@ -11,6 +11,8 @@ class Area():
         pygame.draw.rect(mw, self.fill_color, self.rect)
     def outline(self, frame_color, thickness):
         pygame.draw.rect(mw, frame_color, self.rect, thickness)
+    def collidepoint(self, x, y):
+        return self.rect.collidepoint(x,y)
 
 class Label(Area):
     def __init__(self, x = 0, y = 0, width = 10, height = 10, color=None):
@@ -46,9 +48,10 @@ for i in range(4):
 wait = 0
 while True:
     if wait == 0:
-        wait = 20
+        wait = 60
         click = randint(1, len(cards))
         for i in range(len(cards)):
+            cards[i].color((255,255,0))
             if (i+1) == click:
                 cards[i].draw(10,70)
             else:
@@ -56,5 +59,20 @@ while True:
     else:
         wait -= 1
 
+    x = 0 
+    y = 0
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            x, y = event.pos
+
+    for i in range(len(cards)):
+        if cards[i].collidepoint(x,y):
+            if i + 1 == click:
+                cards[i].color((0,255,0))
+                cards[i].draw(10,70)
+            else:
+                cards[i].color((255,0,0))
+                cards[i].fill()
+
     pygame.display.update()
-    clock.tick(40)
+    clock.tick(60)
