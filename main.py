@@ -1,6 +1,6 @@
 import pygame
 from random import randint
-
+from time import time
 class Area():
     def __init__(self, x = 0, y = 0, width = 10, height = 10, color=None):
         self.rect = pygame.Rect(x,y,width,height)
@@ -45,8 +45,21 @@ cards.append(l4)
 for i in range(4):
     cards[i].set_text()
 
+start_time = time()
+cur_time = start_time
+
+time_text = Label(0,0,50,50,(200,255,255))
+score_text = Label(450,0,50,50,(200,255,255))
+
+
 wait = 0
+score = 0
 while True:
+    new_time = time()
+    if new_time - cur_time >= 1:
+        time_text.set_text(str(int(new_time - start_time)),40, "DARK_BLUE")
+        time_text.draw(0,0)
+        cur_time = new_time
     if wait == 0:
         wait = 60
         click = randint(1, len(cards))
@@ -70,9 +83,15 @@ while True:
             if i + 1 == click:
                 cards[i].color((0,255,0))
                 cards[i].draw(10,70)
+                score += 1
+                score_text.set_text(str(score),40, "DARK_BLUE")
+                score_text.draw(0,0)
             else:
                 cards[i].color((255,0,0))
                 cards[i].fill()
+                score -= 1
+                score_text.set_text(str(score),40, "DARK_BLUE")
+                score_text.draw(0,0)
 
     pygame.display.update()
     clock.tick(60)
