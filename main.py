@@ -47,6 +47,7 @@ for i in range(4):
 
 start_time = time()
 cur_time = start_time
+new_time = start_time
 
 time_text = Label(0,0,50,50,(200,255,255))
 score_text = Label(450,0,50,50,(200,255,255))
@@ -54,7 +55,16 @@ score_text = Label(450,0,50,50,(200,255,255))
 
 wait = 0
 score = 0
+
 while True:
+    if new_time - start_time >= 2:
+        win = Label(0,0,500,500,(255,0,0))
+        win.set_text("Время вышло!", 60, "DARK_BLUE")
+        win.draw(110,180)
+        pygame.display.update()
+        clock.tick(1)
+        continue
+
     new_time = time()
     if new_time - cur_time >= 1:
         time_text.set_text(str(int(new_time - start_time)),40, "DARK_BLUE")
