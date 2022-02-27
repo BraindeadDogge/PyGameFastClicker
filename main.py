@@ -33,10 +33,10 @@ mw.fill((200,255,255))
 clock = pygame.time.Clock()
 
 cards = list()
-l1 = Label(5,50,115,200,(255,255,0))
-l2 = Label(130,50,115,200,(255,255,0))
-l3 = Label(255,50,115,200,(255,255,0))
-l4 = Label(380,50,115,200,(255,255,0))
+l1 = Label(5,100,115,200,(255,255,0))
+l2 = Label(130,100,115,200,(255,255,0))
+l3 = Label(255,100,115,200,(255,255,0))
+l4 = Label(380,100,115,200,(255,255,0))
 cards.append(l1)
 cards.append(l2)
 cards.append(l3)
@@ -49,15 +49,17 @@ start_time = time()
 cur_time = start_time
 new_time = start_time
 
-time_text = Label(0,0,50,50,(200,255,255))
-score_text = Label(450,0,50,50,(200,255,255))
+
+stupid_text = Label(0,0,500,50,(200,255,255))
+time_text = Label(50,50,50,50,(200,255,255))
+score_text = Label(450,50,50,50,(200,255,255))
 
 
 wait = 0
 score = 0
 
 while True:
-    if new_time - start_time >= 2:
+    if new_time - start_time >= 11:
         win = Label(0,0,500,500,(255,0,0))
         win.set_text("Время вышло!", 60, "DARK_BLUE")
         win.draw(110,180)
@@ -65,7 +67,22 @@ while True:
         clock.tick(1)
         continue
 
+    if score >= 5:
+        win = Label(0,0,500,500,(0,200,0))
+        win.set_text("Ты победил!", 60, "DARK_BLUE")
+        win.draw(140,180)
+        result_time = Label(90,230,250,250,(0,200,0))
+        result_time.set_text(
+            "Время прохождения:" + str(int(new_time - start_time)) + " сек", 40, "DARK_BLUE"
+        )
+        result_time.draw(0,0)
+        pygame.display.update()
+        clock.tick(1)
+        continue
+
     new_time = time()
+    stupid_text.set_text("Время:"+ " " * 33 +"Счет:", 40, "DARK_BLUE")
+    stupid_text.draw(15,10)
     if new_time - cur_time >= 1:
         time_text.set_text(str(int(new_time - start_time)),40, "DARK_BLUE")
         time_text.draw(0,0)
@@ -102,6 +119,6 @@ while True:
                 score -= 1
                 score_text.set_text(str(score),40, "DARK_BLUE")
                 score_text.draw(0,0)
-
+                
     pygame.display.update()
     clock.tick(60)
